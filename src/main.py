@@ -5,7 +5,7 @@ def main():
     processor = PlateProcessor()
 
     # Process video
-    video_path = "path/to/your/video.mp4"
+    video_path = "data/input/tc.mp4"
     detected_plates = processor.process_video(video_path)
 
     # Print results

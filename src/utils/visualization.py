@@ -1,7 +1,6 @@
-
 import cv2
 import numpy as np
-from ultralytics.utils.plotting import Annotator, colors
+from ultralytics.utils.plotting import Annotator, colors # type: ignore
 
 class Visualizer:
     @staticmethod

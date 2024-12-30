@@ -2,7 +2,6 @@
 import cv2
 import os
 import numpy as np
-from datetime import datetime
 from ..config.config import Config
 from ..models.detector import PlateDetector
 from ..models.ocr import OCRModel
@@ -61,7 +60,7 @@ class PlateProcessor:
 
         if boxes is not None:
             for box, track_id in zip(boxes, track_ids):
-                # Calculate center point
+                # Calculate center point of detected plate
                 cx = int(box[0] + box[2])//2
                 cy = int(box[1] + box[3])//2
 
@@ -78,6 +77,7 @@ class PlateProcessor:
                 self.visualizer.draw_detection(frame, box, text)
 
     def process_new_plate(self, frame, box, track_id):
+        
         self.counter.append(track_id)
 
         # Crop plate region
@@ -90,9 +90,5 @@ class PlateProcessor:
 
             # Save crop if configured
             if Config.SAVE_CROPS:
-                timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-                filename = f"{plate_text}_{timestamp}.png"
-                cv2.imwrite(
-                    os.path.join(Config.OUTPUT_DIR, filename), 
-                    crop
-                )
+                filename = f"{plate_text}.png"
+                cv2.imwrite(os.path.join(Config.OUTPUT_DIR, filename), crop)
