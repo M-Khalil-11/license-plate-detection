@@ -1,7 +1,7 @@
 
-# License Plate Detection System
+# License Plate Detection and Recognition System
 
-A professional system for detecting and reading license plates from video feeds using YOLO-based models.
+A system for detecting and reading license plates from video feeds using YOLO11-based models.
 
 ## Features
 - Real-time license plate detection and tracking
@@ -9,7 +9,6 @@ A professional system for detecting and reading license plates from video feeds 
 - Region of Interest (ROI) based processing
 - Visual feedback with annotations
 - Plate image cropping and saving
-- Track ID management
 
 ## Setup
 1. Install requirements:
@@ -29,9 +28,7 @@ Adjust settings in `src/config/config.py`:
 - ROI settings
 - Output directory
 - Display options
-- Detection thresholds
 
 ## Output
 - Processed video display with annotations
 - Cropped plate images saved to output directory
-- Console output of detected plates
