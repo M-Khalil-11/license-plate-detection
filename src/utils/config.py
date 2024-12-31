@@ -9,8 +9,8 @@ class Config:
     ROI_HEIGHT_2 = 300
 
     # Output settings
-    OUTPUT_DIR = "data/output"
-    SAVE_CROPS = False
-    DISPLAY_RESULTS = True
-    SAVE_VIDEO = False
+    INPUT_VIDEO_PATH = "data/input/tc.mp4"
+    OUTPUT_VIDEO_PATH = "data/output/tc.avi"
+
+
    
