@@ -40,7 +40,7 @@ class PlateProcessor:
                     break
                 
                 # Process frame
-                display_frame=self.process_frame(frame, area)
+                display_frame = self.process_frame(frame, area)
                 
                 # Save frame if configured
                 if Config.SAVE_VIDEO:
