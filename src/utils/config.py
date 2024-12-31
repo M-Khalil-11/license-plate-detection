@@ -6,5 +6,6 @@ class Config:
 
     # Output settings
     OUTPUT_DIR = "data/output"
-    SAVE_VIDEO = True
+    SAVE_VIDEO = False
+    SAVE_CROPS = True
     DISPLAY_RESULTS = False

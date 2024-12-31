@@ -99,4 +99,6 @@ class PlateProcessor:
         # Perform OCR
         plate_text = self.ocr_model.read_plate(crop)
         self.detected_plates[track_id] = plate_text
-
+        if Config.SAVE_CROPS:
+            text = self.detected_plates.get(track_id, f"Plate {track_id}")
+            cv2.imwrite(os.path.join(Config.OUTPUT_DIR, f"plate_{text}.jpg"), crop)
