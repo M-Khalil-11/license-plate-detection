@@ -3,8 +3,8 @@ import cv2
 import os
 import numpy as np
 from ..config.config import Config
-from ..models.detector import PlateDetector
-from ..models.ocr import OCRModel
+from .detector import PlateDetector
+from .ocr import OCRModel
 from .visualization import Visualizer
 
 class PlateProcessor:
