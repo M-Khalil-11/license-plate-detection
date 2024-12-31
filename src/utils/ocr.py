@@ -18,19 +18,11 @@ class OCRModel:
     def read_plate(self, plate_img):
         #Perform OCR on plate image
         results = self.model(plate_img)
-        if len(results[0].boxes) == 0:
-            return None
-
         chars = []
         for box in results[0].boxes:
             x_center = (box.xyxy[0][0] + box.xyxy[0][2])/2
             class_id = int(box.cls[0])
-            if class_id in self.char_map:
-                chars.append((x_center.item(), self.char_map[class_id]))
-
-        if not chars:
-            return None
-
+            chars.append((x_center.item(), self.char_map[class_id]))
         # Sort characters by x position and join
         chars.sort(key=lambda x: x[0])
         return ''.join(char[1] for char in chars)

@@ -29,10 +29,10 @@ class PlateProcessor:
                 out = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*'mp4v'), fps, (w, h))
             
             # Define ROI area
-            area = [(0, Config.ROI_HEIGHT_1), 
-                    (0, Config.ROI_HEIGHT_2), 
-                    (w, Config.ROI_HEIGHT_2), 
-                    (w, Config.ROI_HEIGHT_1)]
+            area = [(0, h-100 ), 
+                    (0, h-300 ), 
+                    (w, h-300 ), 
+                    (w, h-100 )]
             
             while cap.isOpened():
                 success, frame = cap.read()
@@ -40,15 +40,15 @@ class PlateProcessor:
                     break
                 
                 # Process frame
-                self.process_frame(frame, area)
+                display_frame=self.process_frame(frame, area)
                 
                 # Save frame if configured
                 if Config.SAVE_VIDEO:
-                    out.write(frame)
+                    out.write(display_frame)
                 
                 # Display if configured
                 if Config.DISPLAY_RESULTS:
-                    cv2.imshow("License Plate Detection & OCR", frame)
+                    cv2.imshow("License Plate Detection & OCR", display_frame)
                     if cv2.waitKey(1) & 0xFF == ord("q"):
                         break
             
@@ -59,9 +59,10 @@ class PlateProcessor:
             
             return self.detected_plates
 
-    def process_frame(self, frame, area):
-        # Draw ROI
-        self.visualizer.draw_roi(frame, area)
+    def process_frame(self, frame, area):   
+        #Create a copy of the frame for visualization
+        display_frame = frame.copy()
+        self.visualizer.draw_roi(display_frame, area)
 
         # Detect and track plates
         track_results = self.plate_detector.detect_and_track(frame)
@@ -84,7 +85,9 @@ class PlateProcessor:
 
                 # Draw detection
                 text = self.detected_plates.get(track_id, f"Plate {track_id}")
-                self.visualizer.draw_detection(frame, box, text)
+                self.visualizer.draw_detection(display_frame, box, text)
+
+        return display_frame            
 
     def process_new_plate(self, frame, box, track_id):
         
@@ -95,10 +98,9 @@ class PlateProcessor:
 
         # Perform OCR
         plate_text = self.ocr_model.read_plate(crop)
-        if plate_text:
-            self.detected_plates[track_id] = plate_text
+        self.detected_plates[track_id] = plate_text
 
-            # Save crop if configured
-            if Config.SAVE_CROPS:
-                filename = f"/crops/{plate_text}.png"
-                cv2.imwrite(os.path.join(Config.OUTPUT_DIR, filename), crop)
+        # Save crop if configured
+        if Config.SAVE_CROPS:
+            filename = f"/crops/{plate_text}.png"
+            cv2.imwrite(os.path.join(Config.OUTPUT_DIR, filename), crop)
