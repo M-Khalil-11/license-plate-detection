@@ -1,14 +1,12 @@
 import cv2
 import os
 import numpy as np
-from ..config.config import Config
 from .detector import PlateDetector
 from .ocr import OCRModel
 from .visualization import Visualizer
-
+from .config import Config
 class PlateProcessor:
     def __init__(self):
-        Config.ensure_directories()
         self.plate_detector = PlateDetector(Config.PLATE_MODEL_PATH)
         self.ocr_model = OCRModel(Config.OCR_MODEL_PATH)
         self.visualizer = Visualizer()
