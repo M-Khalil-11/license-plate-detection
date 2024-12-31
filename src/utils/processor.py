@@ -90,7 +90,7 @@ class PlateProcessor:
         return display_frame            
 
     def process_new_plate(self, frame, box, track_id):
-        
+        # Keep track of processed plates
         self.counter.append(track_id)
 
         # Crop plate region
