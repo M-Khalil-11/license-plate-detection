@@ -25,8 +25,8 @@ python src/main.py
 Adjust settings in `src/config/config.py`:
 - Model paths
 - Output directory
-- Display video option
-- Saving video option
+- Display option
+- Saving option
 ## Output
 - Processed video display with annotations
 - Cropped plate images saved to output directory
