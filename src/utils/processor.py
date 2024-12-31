@@ -1,4 +1,3 @@
-
 import cv2
 import os
 import numpy as np
@@ -17,37 +16,50 @@ class PlateProcessor:
         self.counter = []
 
     def process_video(self, video_path):
-        cap = cv2.VideoCapture(video_path)
-        assert cap.isOpened(), "Error reading video file"
-
-        # Get video properties
-        w = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-        h = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-
-        # Define ROI area
-        area = [(0, Config.ROI_HEIGHT_1), 
-                (0, Config.ROI_HEIGHT_2), 
-                (w, Config.ROI_HEIGHT_2), 
-                (w, Config.ROI_HEIGHT_1)]
-
-        while cap.isOpened():
-            success, frame = cap.read()
-            if not success:
-                break
-
-            # Process frame
-            self.process_frame(frame, area)
-
-            # Display if configured
-            if Config.DISPLAY_RESULTS:
-                cv2.imshow("License Plate Detection & OCR", frame)
-                if cv2.waitKey(1) & 0xFF == ord("q"):
+            cap = cv2.VideoCapture(video_path)
+            assert cap.isOpened(), "Error reading video file"
+            
+            # Get video properties
+            w = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+            h = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+            fps = int(cap.get(cv2.CAP_PROP_FPS))
+            
+            # Initialize video writer
+            if Config.SAVE_VIDEO:
+                vid=video_path.split('/')[-1].split('.')[0]
+                output_path = os.path.join(Config.OUTPUT_DIR, f"processed_video_{vid}.mp4")
+                out = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*'mp4v'), fps, (w, h))
+            
+            # Define ROI area
+            area = [(0, Config.ROI_HEIGHT_1), 
+                    (0, Config.ROI_HEIGHT_2), 
+                    (w, Config.ROI_HEIGHT_2), 
+                    (w, Config.ROI_HEIGHT_1)]
+            
+            while cap.isOpened():
+                success, frame = cap.read()
+                if not success:
                     break
-
-        cap.release()
-        cv2.destroyAllWindows()
-
-        return self.detected_plates
+                
+                # Process frame
+                self.process_frame(frame, area)
+                
+                # Save frame if configured
+                if Config.SAVE_VIDEO:
+                    out.write(frame)
+                
+                # Display if configured
+                if Config.DISPLAY_RESULTS:
+                    cv2.imshow("License Plate Detection & OCR", frame)
+                    if cv2.waitKey(1) & 0xFF == ord("q"):
+                        break
+            
+            cap.release()
+            if Config.SAVE_VIDEO:
+                out.release()
+            cv2.destroyAllWindows()
+            
+            return self.detected_plates
 
     def process_frame(self, frame, area):
         # Draw ROI
@@ -90,5 +102,5 @@ class PlateProcessor:
 
             # Save crop if configured
             if Config.SAVE_CROPS:
-                filename = f"{plate_text}.png"
+                filename = f"/crops/{plate_text}.png"
                 cv2.imwrite(os.path.join(Config.OUTPUT_DIR, filename), crop)

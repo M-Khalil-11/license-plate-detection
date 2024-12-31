@@ -1,4 +1,3 @@
-
 # License Plate Detection and Recognition System
 
 A system for detecting and reading license plates from video feeds using YOLO11-based models.

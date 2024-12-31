@@ -13,7 +13,7 @@ class Config:
     OUTPUT_DIR = "data/output"
     SAVE_CROPS = True
     DISPLAY_RESULTS = True
-
+    SAVE_VIDEO = True
     # OCR settings
     CONFIDENCE_THRESHOLD = 0.5
 
