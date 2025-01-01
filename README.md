@@ -15,7 +15,7 @@ A system for detecting and reading license plates from video feeds using YOLO11-
 pip install -r requirements.txt
 ```
 
-2. Configure paths in `src/config/config.py`
+2. Configure paths in `src/utils/config.py`
 3. Run the system:
 ```bash
 python src/main.py
