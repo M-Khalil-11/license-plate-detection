@@ -100,5 +100,8 @@ class PlateProcessor:
         plate_text = self.ocr_model.read_plate(crop)
         self.detected_plates[track_id] = plate_text
         if Config.SAVE_CROPS:
+            crop_dir_name = os.path.join(Config.OUTPUT_DIR, "crops")
+            if not os.path.exists(crop_dir_name):
+                os.mkdir(crop_dir_name)
             text = self.detected_plates.get(track_id, f"Plate {track_id}")
-            cv2.imwrite(os.path.join(Config.OUTPUT_DIR, f"plate_{text}.jpg"), crop)
+            cv2.imwrite(os.path.join(crop_dir_name, f"plate_{text}.jpg"), crop)
