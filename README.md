@@ -22,7 +22,7 @@ python src/main.py
 ```
 
 ## Configuration
-Adjust settings in `src/config/config.py`:
+Adjust settings in `src/utils/config.py`:
 - Model paths
 - Output directory
 - Display option
