@@ -48,7 +48,7 @@ class PlateProcessor:
                 
                 # Display if configured
                 if Config.DISPLAY_RESULTS:
-                    cv2.imshow("License Plate Detection & OCR", display_frame)
+                    cv2.imshow("License Plate Detection & OCR", cv2.resize(display_frame, (1280, 720)))
                     if cv2.waitKey(1) & 0xFF == ord("q"):
                         break
             
@@ -95,7 +95,6 @@ class PlateProcessor:
 
         # Crop plate region
         crop = frame[box[1]:box[3], box[0]:box[2]]
-
         # Perform OCR
         plate_text = self.ocr_model.read_plate(crop)
         self.detected_plates[track_id] = plate_text
