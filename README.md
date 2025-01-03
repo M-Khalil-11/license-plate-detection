@@ -10,6 +10,7 @@ license-plate-detection/
 │   └── input/                         # Folder containing input videos
 ├── src/                               
 │   ├── main.py                        # Main script
+│   ├── model/                         # Folder containing OCR and license plate detection models
 │   └── utils/                         
 │       ├── config.py                  # Configurations
 │       ├── detector.py                # License plate detection and tracking
