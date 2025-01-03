@@ -46,7 +46,7 @@ class PlateProcessor:
             # Process frame
             display_frame = self.process_frame(frame, area, line_y)
             # Display car count
-            display_frame = self.display_car_counts(display_frame)
+            display_frame = self.display_car_count(display_frame)
             # Save frame if configured
             if Config.SAVE_VIDEO:
                 out.write(display_frame)
@@ -128,7 +128,6 @@ class PlateProcessor:
             elif prev_cy > line and cy <= line:
                 self.exiting_count += 1 
 
-    def display_car_counts(self, frame):
-        # Draw car counts on the frame
+    def display_car_count(self, frame):
         self.visualizer.draw_car_counts(frame, self.entering_count, self.exiting_count)
         return frame
