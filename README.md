@@ -12,7 +12,7 @@ license-plate-detection/
 │   ├── main.py                        # Main script
 │   ├── models/
 │   │   ├── ocr_model.pt               # OCR model
-│   │   └── plate_model.pt             # License plate detection model  
+│   │   └── plate_model.pt             # License plate detection model   
 │   └── utils/                         
 │       ├── config.py                  # Configurations
 │       ├── detector.py                # License plate detection and tracking
