@@ -45,14 +45,14 @@ class PlateProcessor:
             
             # Process frame
             display_frame = self.process_frame(frame, area, line_y)
-            
+            # Display car count
+            display_frame = self.display_car_counts(display_frame)
             # Save frame if configured
             if Config.SAVE_VIDEO:
                 out.write(display_frame)
             
             # Display results if configured
             if Config.DISPLAY_RESULTS:
-                display_frame = self.display_car_counts(display_frame)
                 cv2.imshow("License Plate Detection & OCR", cv2.resize(display_frame, (1280, 720)))
                 if cv2.waitKey(1) & 0xFF == ord("q"):
                     break
